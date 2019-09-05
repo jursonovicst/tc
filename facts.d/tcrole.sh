@@ -1,3 +1,8 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-test -f /etc/tcrole && cat /etc/tcrole || echo 'none'
+ROLEFILE=/etc/tcrole
+
+if [ -c $ROLEFILE ]
+then
+  echo "tcrole=$(cat $ROLEFILE)"
+fi
