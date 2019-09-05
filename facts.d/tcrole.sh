@@ -2,7 +2,7 @@
 
 ROLEFILE=/etc/tcrole
 
-if [ -c $ROLEFILE ]
+if [ -f $ROLEFILE ]
 then
   echo "tcrole=$(cat $ROLEFILE)"
 fi
