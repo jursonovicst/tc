@@ -5,4 +5,7 @@
 # @example
 #   include tc
 class tc {
+  file {'/tmp/tcworking.txt':
+    content => "module tc loaded by hydra"
+  }
 }
