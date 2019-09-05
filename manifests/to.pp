@@ -5,4 +5,8 @@
 # @example
 #   include tc::to
 class tc::to {
+  #TODO: remove, this is just a test
+  file {'/tmp/role.txt':
+    content => "I am a traffic ops\n"
+  }
 }
