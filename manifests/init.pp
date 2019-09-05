@@ -6,6 +6,6 @@
 #   include tc
 class tc {
   file {'/tmp/tcworking.txt':
-    content => "module tc loaded by hydra"
+    content => "module tc loaded by hydra\n"
   }
 }
