@@ -9,7 +9,8 @@ class tc::tp::install (
 ) {
   file { $nodejssetupscript:
     ensure => 'present',
-    source => 'https://rpm.nodesource.com/setup_6.x'
+    source => 'https://rpm.nodesource.com/setup_6.x',
+    mode   => '0755',
   }
   ~> exec { $nodejssetupscript:
     #TODO: add onlyif =>

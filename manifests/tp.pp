@@ -7,5 +7,5 @@
 class tc::tp {
 
   class { 'tc::tp::install': }
-  #  -> class { 'tc::to::configure': }
+  -> class { 'tc::tp::configure': }
 }

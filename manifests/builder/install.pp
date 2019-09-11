@@ -23,41 +23,31 @@ class tc::builder::install (
   # download traffic control rmps
   file { "${wwwroot}/traffic_ops-${tcbuildversion}.rpm":
     ensure  => present,
-    source  =>
-      'https://builds.apache.org/job/trafficcontrol-master-build/lastStableBuild/artifact/dist/traffic_ops-3.0.0-10181.b19491d3.el7.x86_64.rpm'
-    ,
+    source  => "https://builds.apache.org/job/trafficcontrol-master-build/lastStableBuild/artifact/dist/traffic_ops-${tcbuildversion}.rpm",
     require => Nginx::Resource::Server['tcrepo'],
     notify  => Createrepo['tcrepo'],
   }
   file { "${wwwroot}/traffic_portal-${tcbuildversion}.rpm":
     ensure  => present,
-    source  =>
-      'https://builds.apache.org/job/trafficcontrol-master-build/lastStableBuild/artifact/dist/traffic_ops-3.0.0-10181.b19491d3.el7.x86_64.rpm'
-    ,
+    source  => "https://builds.apache.org/job/trafficcontrol-master-build/lastStableBuild/artifact/dist/traffic_portal-${tcbuildversion}.rpm",
     require => Nginx::Resource::Server['tcrepo'],
     notify  => Createrepo['tcrepo'],
   }
   file { "${wwwroot}/traffic_router-${tcbuildversion}.rpm":
     ensure  => present,
-    source  =>
-      'https://builds.apache.org/job/trafficcontrol-master-build/lastStableBuild/artifact/dist/traffic_ops-3.0.0-10181.b19491d3.el7.x86_64.rpm'
-    ,
+    source  => "https://builds.apache.org/job/trafficcontrol-master-build/lastStableBuild/artifact/dist/traffic_router-${tcbuildversion}.rpm",
     require => Nginx::Resource::Server['tcrepo'],
     notify  => Createrepo['tcrepo'],
   }
   file { "${wwwroot}/traffic_monitor-${tcbuildversion}.rpm":
     ensure  => present,
-    source  =>
-      'https://builds.apache.org/job/trafficcontrol-master-build/lastStableBuild/artifact/dist/traffic_ops-3.0.0-10181.b19491d3.el7.x86_64.rpm'
-    ,
+    source  => "https://builds.apache.org/job/trafficcontrol-master-build/lastStableBuild/artifact/dist/traffic_monitor-${tcbuildversion}.rpm",
     require => Nginx::Resource::Server['tcrepo'],
     notify  => Createrepo['tcrepo'],
   }
   file { "${wwwroot}/traffic_stats-${tcbuildversion}.rpm":
     ensure  => present,
-    source  =>
-      'https://builds.apache.org/job/trafficcontrol-master-build/lastStableBuild/artifact/dist/traffic_ops-3.0.0-10181.b19491d3.el7.x86_64.rpm'
-    ,
+    source  => "https://builds.apache.org/job/trafficcontrol-master-build/lastStableBuild/artifact/dist/traffic_stats-${tcbuildversion}.rpm",
     require => Nginx::Resource::Server['tcrepo'],
     notify  => Createrepo['tcrepo'],
   }

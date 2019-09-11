@@ -9,7 +9,7 @@
 class tc::to::configure (
   String $tmAdminPw,
   String $dns_subdomain = 'cdn.example.com',
-  String $tm_url        = 'https://to.tc.local',
+  String $base_url      = "https://${facts['ipaddress']}/",
   String $cdn_name      = "Tom's CDN",
   String $to_custom     = '/tmp/to_custom.json',
   String $tmAdminUser   = 'admin',
@@ -23,7 +23,7 @@ class tc::to::configure (
   concat::fragment { 'to_header':
     target  => $to_custom,
     content => epp('tc/to/to_defaults.head.epp', {
-      'tm_url'        => $tm_url,
+      'tm_url'        => $base_url,
       'cdn_name'      => $cdn_name,
       'dns_subdomain' => $dns_subdomain,
       'tmAdminUser'   => $tmAdminUser,
@@ -48,13 +48,16 @@ class tc::to::configure (
   # run postinstall only, if config file changed
   exec { 'postinstall':
     command     => "/opt/traffic_ops/install/bin/postinstall -cfile ${to_custom}",
-    refreshonly => true
+    refreshonly => true,
+    logoutput   => true,
+    timeout     => 600,
   }
   ~> service { 'traffic_ops':
     ensure     => 'running',
     enable     => true,
     hasrestart => true,
   }
+  -> tc::tp::configure::register_to { $base_url: }
 }
 
 
@@ -62,7 +65,7 @@ define tc::to::configure::register_dbconf (
   String $pgUser,
   String $pgPassword,
 ) {
-  @@concat::fragment { 'to_dbconf':
+  @@concat::fragment { 'to_dbconf2':
     target  => 'dummy', # will be overwritten by collection
     content => epp('tc/to/to_defaults.dbconf.epp', { 'pgUser' => $pgUser, 'pgPassword' => $pgPassword }),
   }
@@ -75,7 +78,7 @@ define tc::to::configure::register_database (
   String $password,
   String $dbname = $title,
 ) {
-  @@concat::fragment { 'to_database':
+  @@concat::fragment { 'to_database2':
     target  => 'dummy', # will be overwritten by collection
     content => epp('tc/to/to_defaults.database.epp', { 'dbname' => $dbname, 'hostname' => $hostname, 'user' => $user,
       'password'                                                => $password }),

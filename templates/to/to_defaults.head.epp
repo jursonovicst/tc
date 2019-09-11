@@ -58,7 +58,7 @@
       "config_var": "workers"
     },
     {
-      "Traffic Ops url?": "http://localhost:3000",
+      "Traffic Ops url?": "<%= $tm_url %>",
       "config_var": "base_url"
     },
     {
@@ -93,11 +93,11 @@
   ],
   "/opt/traffic_ops/install/data/json/openssl_configuration.json" : [
     {
-      "Do you want to generate a certificate?": "no",
+      "Do you want to generate a certificate?": "yes",
       "config_var": "genCert"
     },
     {
-      "Country Name (2 letter code)": "",
+      "Country Name (2 letter code)": "de",
       "config_var": "country"
     },
     {
@@ -117,11 +117,11 @@
       "config_var": "org_unit"
     },
     {
-      "Common Name (eg, your name or your server's hostname)": "",
+      "Common Name (eg, your name or your server's hostname)": "to.tc.local",
       "config_var": "common_name"
     },
     {
-      "RSA Passphrase": "CHANGEME!!",
+      "RSA Passphrase": "<%= $tmAdminPw %>",
       "hidden": "true",
       "config_var": "rsaPassword"
     }
