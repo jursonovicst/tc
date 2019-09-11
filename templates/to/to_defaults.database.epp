@@ -1,0 +1,27 @@
+  "/opt/traffic_ops/app/conf/production/database.conf" : [
+    {
+      "config_var": "type",
+      "Database type": "Pg"
+    },
+    {
+      "Database name": "<%= $dbname %>",
+      "config_var": "dbname"
+    },
+    {
+      "Database server hostname IP or FQDN": "<%= $hostname %>",
+      "config_var": "hostname"
+    },
+    {
+      "Database port number": "5432",
+      "config_var": "port"
+    },
+    {
+      "Traffic Ops database user": "<%= $user %>",
+      "config_var": "user"
+    },
+    {
+      "Password for Traffic Ops database user": "<%= $password %>",
+      "hidden": "true",
+      "config_var": "password"
+    }
+  ]

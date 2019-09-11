@@ -1,0 +1,15 @@
+  "/opt/traffic_ops/app/db/dbconf.yml" : [
+    {
+      "Database server root (admin) user": "<%= $pgUser %>",
+      "config_var": "pgUser"
+    },
+    {
+      "Password for database server admin": "<%= $pgPassword %>",
+      "hidden": "true",
+      "config_var": "pgPassword"
+    },
+    {
+      "Download Maxmind Database?": "yes",
+      "config_var": "maxmind"
+    }
+  ],

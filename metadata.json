@@ -38,6 +38,14 @@
     {
       "name": "puppet",
       "version_requirement": ">= 4.10.0 < 7.0.0"
+    },
+    {
+      "name": "puppetlabs-concat",
+      "version_requirement": ">= 4.7.0 < 6.0.0"
+    },
+    {
+      "name": "nginx",
+      "version_requirement": ">= 1.0.0 < 99.9.9"
     }
   ],
   "pdk-version": "1.13.0",
