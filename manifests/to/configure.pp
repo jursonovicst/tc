@@ -9,7 +9,7 @@
 class tc::to::configure (
   String $tmAdminPw,
   String $dns_subdomain = 'cdn.example.com',
-  String $base_url      = "https://${facts['ipaddress']}/",
+  String $base_url      = "https://${facts['ipaddress']}",
   String $cdn_name      = "Tom's CDN",
   String $to_custom     = '/tmp/to_custom.json',
   String $tmAdminUser   = 'admin',
