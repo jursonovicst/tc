@@ -4,7 +4,7 @@
     "name": "Traffic Portal",
     "api": {
       "_comment": "This should have the same value found in /etc/traffic_portal/conf/config.js",
-      "baseUrl": "<%= $base_url %>/api/"
+      "baseUrl": "<%= $base_url %>/api"
     },
     "enforceCapabilities": false,
     "dashboard": {
