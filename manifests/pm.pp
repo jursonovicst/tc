@@ -17,7 +17,7 @@ class tc::pm (
     mode   => '0755',
   }
   -> cron { 'removenodes':
-    command => "/opt/tc/removenodes.py ${sqsurl} ${region}",
+    command => "/opt/tc/removenodes.py ${sqsurl} ${region} 2>&1 1>>/var/log/removenodes.log",
     user    => 'root',
   }
 }
