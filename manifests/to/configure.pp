@@ -8,9 +8,9 @@
 
 class tc::to::configure (
   String $tmAdminPw,
-  String $dns_subdomain = 'cdn.example.com',
+  String $dns_subdomain,
   String $base_url      = "https://${facts['ipaddress']}",
-  String $cdn_name      = "Tom's CDN",
+  String $cdn_name,
   String $to_custom     = '/tmp/to_custom.json',
   String $tmAdminUser   = 'admin',
 ) {
@@ -52,11 +52,12 @@ class tc::to::configure (
     logoutput   => true,
     timeout     => 600,
   }
-  ~> service { 'traffic_ops':
-    ensure     => 'running',
-    enable     => true,
-    hasrestart => true,
-  }
+# no need for restart, postinstall will do that
+#  ~> service { 'traffic_ops':
+#    ensure     => 'running',
+#    enable     => true,
+#    hasrestart => true,
+#  }
   -> tc::tp::configure::register_to { $base_url: }
 }
 

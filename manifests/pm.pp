@@ -4,7 +4,10 @@
 #
 # @example
 #   include tc::puppet
-class tc::pm {
+class tc::pm (
+  String $sqsurl,
+  String $region,
+){
   Package { 'python3-boto3':
     ensure => 'latest'
   }
@@ -12,5 +15,9 @@ class tc::pm {
     ensure => present,
     source => 'puppet:///modules/tc/pm/removenodes.py',
     mode   => '0755',
+  }
+  -> cron { 'removenodes':
+    command => "/opt/tc/removenodes.py ${sqsurl} ${region}",
+    user    => 'root',
   }
 }

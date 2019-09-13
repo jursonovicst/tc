@@ -5,6 +5,8 @@
 # @example
 #   include tc::builder
 class tc::builder {
-  include tc::builder::install
-
+  class { 'tc::builder::build':}
+  -> class {'tc::builder::createrepo':
+    reporoot => $tc::builder::build::reporoot
+  }
 }

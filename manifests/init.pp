@@ -12,17 +12,23 @@ class tc (
     file { '/tmp/role.txt':
       content => "I have no role, file ${rolefile} probably does not exist!\n"
     }
-  } elsif $facts['tcrole'] == 'trafficopsdb' {
-    include tc::todb
-  } elsif $facts['tcrole'] == 'trafficops' {
-    include tc::to
-  } elsif $facts['tcrole'] == 'trafficportal' {
-    include tc::tp
-  } elsif $facts['tcrole'] == 'builder' {
-    include tc::builder
   } else {
-    file { '/tmp/role.txt':
-      content => "I have an unknown role: ${facts['tcrole']}\n"
+    class { 'motd':
+      content => "*********************\n I am ${facts['tcrole']}\n*********************\n",
+    }
+
+    if $facts['tcrole'] == 'trafficopsdb' {
+      include tc::todb
+    } elsif $facts['tcrole'] == 'trafficops' {
+      include tc::to
+    } elsif $facts['tcrole'] == 'trafficportal' {
+      include tc::tp
+    } elsif $facts['tcrole'] == 'builder' {
+      include tc::builder
+    } else {
+      class { 'motd':
+        content => "*********************\n I have an unknown role: ${facts['tcrole']}\n*********************\n",
+      }
     }
   }
 }

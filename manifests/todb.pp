@@ -5,10 +5,6 @@
 # @example
 #   include tc::todb
 class tc::todb {
-  class { 'tc::todb::install':
-    pgPassword => 'vuNEXydFVNg3WyaD',
-  }
-  -> class { 'tc::todb::configure':
-    toPassword => 'vuNEXydFVNg3WyaD',
-  }
+  class { 'tc::todb::install':}
+  -> class { 'tc::todb::configure':}
 }

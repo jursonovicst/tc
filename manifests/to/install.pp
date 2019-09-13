@@ -21,7 +21,9 @@ class tc::to::install (
   #      tc::to::buildversion}.el7.x86_64.rpm",
   #  }
   -> Tc::Builder::Repo <<|  |>>
-  -> Package { 'traffic_ops': }
+  -> Package { 'traffic_ops':
+    ensure => 'latest'
+  }
   -> cpan { "IPC::Run3":
     ensure  => present,
     require => Class['::cpan'],

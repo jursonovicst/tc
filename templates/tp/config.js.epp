@@ -21,13 +21,13 @@
 module.exports = {
   timeout: '120s',
   useSSL: false,        // set to true if you plan to use https (self-signed or trusted certs).
-  port: <%= $port %>,             // set to http port
+  port: 80,             // set to http port
   sslPort: 443,         // set to https port
   // if useSSL is true, generate ssl certs and provide the proper locations.
   ssl: {
-  key:    '/etc/pki/tls/private/localhost.key',
-  cert:   '/etc/pki/tls/certs/localhost.crt',
-  ca:     [ '/etc/pki/tls/certs/ca-bundle.crt' ]
+  key:    '<%= $sslkey %>',
+  cert:   '<%= $sslcert %>',
+  ca:     [ '' ]
 },
 // set api 'base_url' to the traffic ops api url (all api calls made from the traffic portal will be proxied to the api base_url)
 api: {
