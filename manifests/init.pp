@@ -1,6 +1,6 @@
 # @summary A short summary of the purpose of this class
 #
-# A description of what this class does
+# This class installs the required traffic control role according to the /etc/tcrole sprcification.
 #
 # @example
 #   include tc
@@ -9,9 +9,8 @@ class tc (
 ) {
   # classify node
   if !$facts['tcrole'] {
-    file { '/tmp/role.txt':
-      content => "I have no role, file ${rolefile} probably does not exist!\n"
-    }
+    notify { "I, $hostname have no tcrole fact, ${rolefile} probably does not exist!": }
+
   } else {
     class { 'motd':
       content => "*********************\n I am ${facts['tcrole']}\n*********************\n",
@@ -23,6 +22,10 @@ class tc (
       include tc::to
     } elsif $facts['tcrole'] == 'trafficportal' {
       include tc::tp
+    } elsif $facts['tcrole'] == 'trafficmonitor' {
+      include tc::tm
+    } elsif $facts['tcrole'] == 'trafficrouter' {
+      include tc::tr
     } elsif $facts['tcrole'] == 'builder' {
       include tc::builder
     } else {
