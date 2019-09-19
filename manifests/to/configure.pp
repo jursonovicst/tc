@@ -1,6 +1,6 @@
 # @summary A short summary of the purpose of this class
 #
-# A description of what this class does
+# traffic ops config
 #
 # @example
 #   include tc::to::configure
@@ -9,11 +9,12 @@
 class tc::to::configure (
   String $tmAdminPw,
   String $dns_subdomain,
-  String $base_url      = "https://${facts['ipaddress']}",
   String $cdn_name,
-  String $to_custom     = '/tmp/to_custom.json',
-  String $tmAdminUser   = 'admin',
+  String $base_url    = "https://${facts['ipaddress']}",
+  String $to_custom   = '/tmp/to_custom.json',
+  String $tmAdminUser = 'admin',
 ) {
+  # create traffic ops postinstall config file
   concat { $to_custom:
     owner  => 'root',
     group  => 'root',
@@ -45,42 +46,47 @@ class tc::to::configure (
     order   => '04',
   }
 
-  # run postinstall only, if config file changed
+  # run postinstall only, if config file changed, script is slow, use a long timeout
   exec { 'postinstall':
     command     => "/opt/traffic_ops/install/bin/postinstall -cfile ${to_custom}",
     refreshonly => true,
     logoutput   => true,
     timeout     => 600,
   }
-# no need for restart, postinstall will do that
-#  ~> service { 'traffic_ops':
-#    ensure     => 'running',
-#    enable     => true,
-#    hasrestart => true,
-#  }
-  -> tc::tp::configure::register_to { $base_url: }
+
+  # register traffic ops for traffic portal and traffic monitor
+  tc::tp::configure::register_to { $base_url:
+    require => Exec['postinstall']
+  }
+  tc::tm::configure::register_to { $base_url:
+    username => $tmAdminUser,
+    password => $tmAdminPw,
+    insecure => false,
+    cdnName  => $cdn_name,
+    require  => Exec['postinstall']
+  }
 }
 
 
-define tc::to::configure::register_dbconf (
+define tc::to::configure::register_todb (
   String $pgUser,
   String $pgPassword,
 ) {
   @@concat::fragment { 'to_dbconf2':
-    target  => 'dummy', # will be overwritten by collection
+    target  => 'dummy', # will be overwritten at collection
     content => epp('tc/to/to_defaults.dbconf.epp', { 'pgUser' => $pgUser, 'pgPassword' => $pgPassword }),
   }
 }
 
 
-define tc::to::configure::register_database (
+define tc::to::configure::configure_todb (
   String $hostname,
   String $user,
   String $password,
   String $dbname = $title,
 ) {
   @@concat::fragment { 'to_database2':
-    target  => 'dummy', # will be overwritten by collection
+    target  => 'dummy', # will be overwritten at collection
     content => epp('tc/to/to_defaults.database.epp', { 'dbname' => $dbname, 'hostname' => $hostname, 'user' => $user,
       'password'                                                => $password }),
   }
