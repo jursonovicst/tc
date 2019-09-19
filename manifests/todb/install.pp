@@ -9,7 +9,7 @@ class tc::todb::install (
   String $pgUser    = 'postgres',
   String $pgVersion = '9.6',
 ) {
-  # set pg version
+  # set pg version and repo
   class { 'postgresql::globals':
     manage_package_repo => true,
     version             => $pgVersion,
