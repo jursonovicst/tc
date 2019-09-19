@@ -1,10 +1,10 @@
 # @summary A short summary of the purpose of this class
 #
-# A description of what this class does
+# Prepares the postgresql database for traffic ops.
 #
 # @example
 #   include tc::todb
 class tc::todb {
-  class { 'tc::todb::install':}
-  -> class { 'tc::todb::configure':}
+  class { 'tc::todb::install': }
+  -> class { 'tc::todb::configure': }
 }
