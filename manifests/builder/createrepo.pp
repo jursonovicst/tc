@@ -1,6 +1,6 @@
 # @summary A short summary of the purpose of this class
 #
-# Creates a YUM repository with the traffic ops rmps.
+# Creates a YUM repository with the traffic control packages.
 #
 # @example
 #   include tc::builder::install

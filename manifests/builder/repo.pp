@@ -1,6 +1,6 @@
 # @summary A short summary of the purpose of this defined type.
 #
-# Exported yumrepo resource to collect on the tc nodes.
+# Install traffic control repo.
 #
 # @example
 #   tc::builder::repo { 'namevar': }

@@ -1,30 +1,34 @@
 # @summary A short summary of the purpose of this class
 #
-# A description of what this class does
+# Clone and build traffic control from github
 #
 # @example
 #   include tc::builder::build
 class tc::builder::build (
-  String $version = '3.0.2',
+  String $version            = '3.0.2',
   String $trafficcontrolroot = '/opt/go/src/github.com/apache/trafficcontrol',
-  String $reporoot = "${trafficcontrolroot}/dist"
-){
-  file {'/etc/yum.repos.d/docker-ce.repo':
+  String $reporoot           = "${trafficcontrolroot}/dist"
+) {
+  # install build prerequisites
+  file { '/etc/yum.repos.d/docker-ce.repo':
     ensure => 'present',
     source => 'https://download.docker.com/linux/centos/docker-ce.repo',
   }
-  -> package {['docker-ce', 'docker-ce-cli', 'containerd.io', 'git']:
+  ~> package { ['docker-ce', 'docker-ce-cli', 'containerd.io', 'git']:
     ensure => 'latest'
   }
-  -> archive { '/opt/go1.13.linux-amd64.tar.gz':
-    source        => 'https://dl.google.com/go/go1.13.linux-amd64.tar.gz',
-    extract       => true,
-    extract_path  => '/opt',
-  }
-  -> service {'docker':
+  ~> service { 'docker':
     ensure     => 'running',
     enable     => true,
+    hasrestart => true,
   }
+  -> archive { '/opt/go1.13.linux-amd64.tar.gz':
+    source       => 'https://dl.google.com/go/go1.13.linux-amd64.tar.gz',
+    extract      => true,
+    extract_path => '/opt',
+  }
+
+  # clone traffic control
   -> vcsrepo { $trafficcontrolroot:
     ensure   => present,
     provider => git,
@@ -32,6 +36,7 @@ class tc::builder::build (
     revision => "RELEASE-${version}",
   }
 
+  # build
   exec { 'traffic_stats_build':
     command     => "${trafficcontrolroot}/pkg -v traffic_stats_build",
     cwd         => $trafficcontrolroot,
