@@ -4,8 +4,7 @@
 #
 # @example
 #   include tc::to
-class tc::to (
-) {
+class tc::to {
   class { 'tc::to::install': }
   -> class { 'tc::to::configure': }
 }
