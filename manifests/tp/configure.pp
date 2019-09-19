@@ -1,16 +1,19 @@
 # @summary A short summary of the purpose of this class
 #
-# A description of what this class does
+# traffic portal config
 #
 # @example
 #   include tc::tp::configure
 class tc::tp::configure {
+  # write config files
   File  <<| title == '/etc/traffic_portal/conf/config.js' |>> {
     notify => Service['traffic_portal']
   }
   File  <<| title == '/opt/traffic_portal/public/traffic_portal_properties.json' |>>{
     notify => Service['traffic_portal']
   }
+
+  # restart service if needed
   Service { 'traffic_portal':
     ensure     => 'running',
     enable     => true,
@@ -26,8 +29,8 @@ define tc::tp::configure::register_to (
     ensure  => 'present',
     content => epp('tc/tp/config.js.epp', {
       'base_url' => $base_url,
-      'sslkey' => '/etc/traffic_portal/ssl/trafficportal.key',
-      'sslcert' => '/etc/traffic_portal/ssl/trafficportal.crt',
+      'sslkey'   => '/etc/traffic_portal/ssl/trafficportal.key',
+      'sslcert'  => '/etc/traffic_portal/ssl/trafficportal.crt',
     }),
   }
   @@file { '/opt/traffic_portal/public/traffic_portal_properties.json':
